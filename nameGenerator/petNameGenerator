@@ -1,0 +1,31 @@
+DROP TABLE IF EXISTS names;
+DROP TABLE IF EXISTS houses;
+DROP TABLE IF EXISTS house_name;
+
+CREATE TABLE names (
+    name_id serial   NOT NULL,
+    first_name varchar(50) NOT NULL,
+    last_name varchar(50) NOT NULL,
+    CONSTRAINT pk_names PRIMARY KEY (name_id),
+    CONSTRAINT uc_names_first_name UNIQUE (first_name)
+);
+
+CREATE TABLE houses (
+    house_id serial NOT NULL,
+    house_name varchar(60) NOT NULL,
+    CONSTRAINT pk_houses PRIMARY KEY (house_id),
+    CONSTRAINT uc_houses_house_name UNIQUE (house_name)
+);
+
+CREATE TABLE house_name (
+    name_id serial NOT NULL,
+    house_id serial NOT NULL,
+	CONSTRAINT pk_house_name PRIMARY KEY (name_id, house_id)
+);
+
+select *
+from names
+inner join house_name
+on house_name.name_id = names.name_id
+inner join houses
+on houses.house_id = house_name.house_id;
